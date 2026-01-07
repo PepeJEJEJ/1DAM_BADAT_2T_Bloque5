@@ -1,222 +1,261 @@
-# 📘 Tema 11 — Consultas multitabla y subconsultas
+# 📘 Tema 11 — Consultas Multitabla y Subconsultas
 
 ---
 
-# 1. Introducción: del Modelo Lógico al Modelo Físico
+## 📑 Índice
 
-El **modelo físico** es la representación REAL de la base de datos en un SGBD (MySQL, MariaDB, Oracle…).
+- [1. Introducción](#1-introducción)
+- [2. Consultas sobre varias tablas](#2-consultas-sobre-varias-tablas)
+- [3. Composiciones internas](#3-composiciones-internas)
+  - [3.1. INNER JOIN](#31-inner-join-join)
+  - [3.2. NATURAL JOIN](#32-natural-join)
+- [4. Producto cartesiano (CROSS JOIN)](#4-producto-cartesiano-cross-join)
+- [5. Composiciones externas](#5-composiciones-externas)
+  - [5.1. LEFT JOIN](#51-left-join)
+  - [5.2. RIGHT JOIN](#52-right-join)
+  - [5.3. FULL OUTER JOIN](#53-full-outer-join)
+- [6. Subconsultas](#6-subconsultas)
+- [7. Tipos de subconsultas](#7-tipos-de-subconsultas)
+- [8. Subconsultas de varias filas](#8-subconsultas-de-varias-filas)
+- [9. EXISTS y NOT EXISTS](#9-exists-y-not-exists)
+- [10. Subconsultas con GROUP BY y HAVING](#10-subconsultas-con-group-by-y-having)
+- [11. Operaciones de conjuntos](#11-operaciones-de-conjuntos)
+- [12. Ordenación](#12-ordenación)
+- [Esquema resumen](#-esquema-resumen)
 
-Es la fase donde el diseño conceptual (E/R) y el diseño lógico (relacional) se convierten en **código SQL implementable** mediante instrucciones DDL.
-
-### 🔁 Proceso habitual de diseño:
-
-| Fase | ¿Qué representa? |
-|------|------------------|
-| **Modelo conceptual (E/R)** | Entidades, atributos, relaciones |
-| **Modelo lógico (Relacional)** | Tablas, claves primarias, claves foráneas, normalización |
-| **Modelo físico (DDL)** | CREATE TABLE, tipos de datos, restricciones, índices |
-
----
-
-# 2. El Lenguaje SQL y sus sublenguajes
-
-SQL se divide en diferentes bloques que cumplen funciones específicas:
-
-```
-             SQL (Structured Query Language)
- ┌──────────┬────────────┬───────────┬─────────────┐
- |   DDL    |    DML     |    DCL    |     TCL     |
- |Definir   |Manipular   |Controlar  |Transacciones|
- └──────────┴────────────┴───────────┴─────────────┘
-```
-
-| Sublenguaje | Función | Instrucciones |
-|-------------|---------|----------------|
-| **DDL** | Define estructuras | CREATE, DROP, ALTER, TRUNCATE |
-| **DML** | Manipula datos | SELECT, INSERT, UPDATE, DELETE |
-| **DCL** | Gestiona permisos | GRANT, REVOKE |
-| **TCL** | Controla transacciones | COMMIT, ROLLBACK, SAVEPOINT |
-
-📌 **En este tema trabajamos solo con DDL → Modelo Físico.**
 
 ---
 
-# 3. Gestión de Bases de Datos (DDL)
+## 1. Introducción
+
+En temas anteriores hemos trabajado consultas sobre **una sola tabla**.  
+Sin embargo, una de las grandes ventajas de las **bases de datos relacionales** es distribuir la información en **varias tablas relacionadas**, evitando duplicidades.
+
+👉 En este tema aprenderemos a:
+- Realizar **consultas multitabla**
+- Usar **JOINs**
+- Crear y entender **subconsultas**
+- Aplicar **operaciones de conjuntos** (UNION, INTERSECT, MINUS)
+
+---
+
+## 2. Consultas sobre varias tablas
+
+Las tablas se relacionan mediante:
+- **Clave primaria (PK)** en una tabla
+- **Clave foránea (FK)** en otra
+
+Para consultar datos de varias tablas se usa `SELECT` junto con **JOIN**, lo que se denomina:
+
+> 🔹 **Consulta multitabla**
+
+### Tipos de composiciones
+
+| Tipo | Cláusulas |
+|----|----|
+| **Internas** | INNER JOIN, NATURAL JOIN |
+| **Externas** | LEFT JOIN, RIGHT JOIN, FULL OUTER JOIN |
+| **Cruzadas** | CROSS JOIN |
+
+---
+
+## 3. Composiciones internas
+
+### 3.1. INNER JOIN (JOIN)
+
+Devuelve **solo las filas que coinciden** en ambas tablas.
 
 ```sql
-DROP DATABASE IF EXISTS mi_bd;
-CREATE DATABASE mi_bd;
-USE mi_bd;
+SELECT e.nombre, s.nombre_sucursal
+FROM empleados e
+INNER JOIN sucursales s
+ON e.cod_sucursal = s.cod_sucursal;
+```
+
+📌 Si no hay coincidencia → **no aparece en el resultado**
+
+---
+
+### 3.2. NATURAL JOIN
+
+Une automáticamente las tablas por **columnas con el mismo nombre y tipo**.
+
+```sql
+SELECT nombre, nombre_sucursal
+FROM empleados
+NATURAL JOIN sucursales;
+```
+
+⚠️ Puede ser peligroso si hay columnas con el mismo nombre que **no deberían relacionarse**.
+
+---
+
+## 4. Producto cartesiano (CROSS JOIN)
+
+Combina **todas las filas de una tabla con todas las filas de otra**.
+
+```
+Filas finales = filas_tabla1 × filas_tabla2
+```
+
+```sql
+SELECT *
+FROM tareas
+CROSS JOIN empleados;
 ```
 
 ---
 
-# 4. Tipos de Datos (ampliados según Tema 6)
+## 5. Composiciones externas
 
-## 4.1. Numéricos
+> 🧠 **Resumen visual de los tipos de JOIN**
+>  
+> La siguiente infografía muestra qué registros devuelve cada tipo de JOIN
+> y cómo cambian los resultados al usar condiciones `IS NULL`.
 
-| Tipo | Descripción | Ejemplo |
-|------|-------------|---------|
-| INT | Entero | 25 |
-| DECIMAL(p,s) | Valor exacto | DECIMAL(5,2) |
-| FLOAT / DOUBLE | Valor aproximado | 3.141592 |
+![Resumen visual de JOINs](./img/sql-joins.png)
 
----
-
-## 4.2. Texto
-
-| Tipo | Descripción |
-|------|-------------|
-| CHAR(n) | Longitud fija |
-| VARCHAR(n) | Longitud variable |
-| TEXT | Texto largo |
-| ENUM | Lista cerrada de valores |
-
----
-
-## 4.3. Booleanos
-
-| Tipo | Nota |
-|------|------|
-| BOOLEAN | Equivalente a TINYINT(1) |
-| TINYINT(1) | 0 = falso, 1 = verdadero |
-
----
-
-## 4.4. Fechas y tiempos
-
-| Tipo | Descripción |
-|------|-------------|
-| DATE | Fecha |
-| TIME | Hora |
-| DATETIME | Fecha + hora |
-| TIMESTAMP | Marca de tiempo |
-
----
-
-# 5. Crear Tablas (DDL)
+### 5.1. LEFT JOIN
 
 ```sql
-CREATE TABLE autores (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(50) NOT NULL
+SELECT e.nombre, s.nombre_sucursal
+FROM empleados e
+LEFT JOIN sucursales s
+ON e.cod_sucursal = s.cod_sucursal;
+```
+
+---
+
+### 5.2. RIGHT JOIN
+
+```sql
+SELECT e.nombre, s.nombre_sucursal
+FROM empleados e
+RIGHT JOIN sucursales s
+ON e.cod_sucursal = s.cod_sucursal;
+```
+
+---
+
+### 5.3. FULL OUTER JOIN
+
+```sql
+SELECT *
+FROM empleados
+FULL OUTER JOIN sucursales
+ON empleados.cod_sucursal = sucursales.cod_sucursal;
+```
+
+---
+
+## 6. Subconsultas
+
+Una **subconsulta** es una consulta dentro de otra.
+
+```sql
+SELECT *
+FROM empleados
+WHERE salario >
+(
+    SELECT salario
+    FROM empleados
+    WHERE nombre = 'Martina'
 );
 ```
 
 ---
 
-# 6. Restricciones (Modelo Físico)
+## 7. Tipos de subconsultas
 
-## 6.1. PRIMARY KEY
-
-```sql
-id INT PRIMARY KEY
-```
-
----
-
-## 6.2. FOREIGN KEY + acciones referenciales
-
-```sql
-FOREIGN KEY (id_autor)
-  REFERENCES autores(id)
-  ON DELETE CASCADE
-  ON UPDATE CASCADE;
-```
+| Tipo | Resultado |
+|----|----|
+| Escalar | 1 fila, 1 columna |
+| De fila | 1 fila |
+| De tabla | Varias filas |
 
 ---
 
-# 🟦 Acciones Referenciales
+## 8. Subconsultas de varias filas
 
-| Acción | Efecto al borrar el padre |
-|--------|----------------------------|
-| **CASCADE** | Se eliminan también los hijos |
-| **SET NULL** | La FK pasa a NULL |
-| **SET DEFAULT** | La FK toma el valor DEFAULT |
-| **RESTRICT** | Prohíbe el borrado si hay hijos |
-| **NO ACTION** | Igual que RESTRICT |
-
-### Explicación clara:
-
-**CASCADE** → Elimina hijos automáticamente  
-**SET NULL** → Mantiene hijos sin padre (FK = NULL)  
-**SET DEFAULT** → Asigna un valor por defecto  
-**RESTRICT** → Impide borrar si hay hijos  
-**NO ACTION** → Igual que RESTRICT, comprobación final
+| Operador | Uso |
+|----|----|
+| ALL | Cumple para todos |
+| ANY | Cumple para alguno |
+| IN | Está en el conjunto |
+| NOT IN | No está en el conjunto |
 
 ---
 
-## 6.3. NOT NULL
+## 9. EXISTS y NOT EXISTS
 
 ```sql
-nombre VARCHAR(50) NOT NULL;
-```
-
----
-
-## 6.4. UNIQUE
-
-```sql
-email VARCHAR(100) UNIQUE;
-```
-
----
-
-## 6.5. CHECK
-
-```sql
-edad INT CHECK (edad >= 0);
-```
-
----
-
-## 6.6. DEFAULT
-
-```sql
-estado VARCHAR(20) DEFAULT 'activo';
-```
-
----
-
-# 7. Modificar Tablas (ALTER TABLE)
-
-### Añadir columna
-```sql
-ALTER TABLE empleados ADD telefono VARCHAR(20);
-```
-
-### Eliminar columna
-```sql
-ALTER TABLE empleados DROP COLUMN telefono;
-```
-
-### Modificar columna
-```sql
-ALTER TABLE empleados MODIFY salario DECIMAL(10,2) NOT NULL;
-```
-
-### Añadir clave foránea
-```sql
-ALTER TABLE libros
-ADD CONSTRAINT fk_autor
-FOREIGN KEY (id_autor)
-REFERENCES autores(id)
-ON DELETE SET NULL;
-```
-
----
-
-# 9. Ejemplo completo de tabla física
-
-```sql
-CREATE TABLE clientes (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(80) NOT NULL,
-    telefono VARCHAR(20),
-    provincia VARCHAR(50),
-    cp INT CHECK (cp BETWEEN 1000 AND 52999),
-    fecha_registro DATE DEFAULT (CURRENT_DATE)
+SELECT nombre
+FROM productos p
+WHERE EXISTS (
+    SELECT *
+    FROM almacen a
+    WHERE a.id_producto = p.id_producto
 );
 ```
 
 ---
+
+## 10. Subconsultas con GROUP BY y HAVING
+
+```sql
+SELECT departamento
+FROM empleados
+GROUP BY departamento
+HAVING AVG(salario) >
+    (SELECT AVG(salario) FROM empleados);
+```
+
+---
+
+## 11. Operaciones de conjuntos
+
+### UNION
+
+```sql
+SELECT nombre FROM empleados
+UNION
+SELECT nombre FROM clientes;
+```
+
+### INTERSECT
+
+```sql
+SELECT id_producto FROM almacen1
+INTERSECT
+SELECT id_producto FROM almacen2;
+```
+
+### MINUS / EXCEPT
+
+```sql
+SELECT id_producto FROM almacen1
+MINUS
+SELECT id_producto FROM almacen2;
+```
+
+---
+
+## 12. Ordenación
+
+```sql
+SELECT nombre FROM empleados
+UNION
+SELECT nombre FROM clientes
+ORDER BY nombre;
+```
+
+---
+
+## 🧾 Esquema resumen
+
+```
+JOINs → INNER | LEFT | RIGHT | FULL | CROSS
+Subconsultas → Escalares | Fila | Tabla
+Operadores → ALL | ANY | IN | EXISTS
+Conjuntos → UNION | INTERSECT | MINUS
+```
