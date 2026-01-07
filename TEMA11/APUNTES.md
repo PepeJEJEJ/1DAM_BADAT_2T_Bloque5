@@ -108,14 +108,9 @@ CROSS JOIN empleados;
 
 ## 5. Composiciones externas
 
-> 🧠 **Resumen visual de los tipos de JOIN**
->  
-> La siguiente infografía muestra qué registros devuelve cada tipo de JOIN
-> y cómo cambian los resultados al usar condiciones `IS NULL`.
-
-![Resumen visual de JOINs](./img/sql-joins.png)
-
 ### 5.1. LEFT JOIN
+
+Toma todas las filas de la tabla de la izquierda y las combina con las filas coincidentes de la tabla de la derecha. Si no hay coincidencias, muestra las filas de la izquierda y pone NULL en las columnas de la derecha
 
 ```sql
 SELECT e.nombre, s.nombre_sucursal
@@ -128,6 +123,8 @@ ON e.cod_sucursal = s.cod_sucursal;
 
 ### 5.2. RIGHT JOIN
 
+Toma todas las filas de la tabla de la derecha y las combina con las filas coincidentes de la tabla de la izquierda. Si no hay coincidencias, muestra las columnas de todas las filas de la tabla derecha y pone NULL en las columnas de la tabla izquierda.
+
 ```sql
 SELECT e.nombre, s.nombre_sucursal
 FROM empleados e
@@ -137,7 +134,9 @@ ON e.cod_sucursal = s.cod_sucursal;
 
 ---
 
-### 5.3. FULL OUTER JOIN
+### 5.3. FULL OUTER JOIN (❌ No soportado por MySQL)
+
+Combina todas las filas de ambas tablas. Muestra las filas con coincidencias y también las filas sin coincidencias, poniendo NULL donde no haya datos.
 
 ```sql
 SELECT *
