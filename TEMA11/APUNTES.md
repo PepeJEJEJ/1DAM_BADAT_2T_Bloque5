@@ -145,6 +145,8 @@ FULL OUTER JOIN sucursales
 ON empleados.cod_sucursal = sucursales.cod_sucursal;
 ```
 
+![alt text](img/sql-joins.png)
+
 ---
 
 ## 6. Subconsultas
@@ -164,7 +166,7 @@ WHERE salario >
 
 ---
 
-## 7. Tipos de subconsultas
+**Tipos de subconsultas**
 
 | Tipo | Resultado |
 |----|----|
@@ -174,12 +176,12 @@ WHERE salario >
 
 ---
 
-## 8. Subconsultas de varias filas
+### 7.1. Subconsultas de varias filas
 
 | Operador | Uso |
 |----|----|
 | ALL | Cumple para todos |
-| ANY | Cumple para alguno |
+| ANY/SOME | Cumple para alguno |
 | IN | Está en el conjunto |
 | NOT IN | No está en el conjunto |
 
