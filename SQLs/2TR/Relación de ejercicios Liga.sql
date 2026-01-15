@@ -14,7 +14,8 @@ select * from jugador j join equipo e on j.equipo=e.id_equipo where j.altura >
 (select j.altura from jugador j join equipo e on j.equipo=e.id_equipo where e.nombre = 'caja laboral' order by j.altura desc limit 1);
 
 -- 5. Datos de los jugadores mejor pagado y peor pagado de la liga.
-select * from jugador where salario = (select max(salario) from jugador) or (select min(salario) from jugador where salario is not null);
+select * from jugador where salario = (select max(salario) from jugador) 
+or (select min(salario) from jugador where salario is not null);
 
 -- 6. Datos del jugador más antiguo.
 select * from jugador where fecha_alta = (select min(fecha_alta) from jugador where fecha_alta is not null);
