@@ -10,7 +10,8 @@ select j.* from jugador j join equipo e on j.equipo = e.id_equipo where e.nombre
 select sum(altura) from jugador j join equipo e on j.equipo = e.id_equipo where e.nombre = "CAI Zaragoza" or e.nombre = "Real Madrid";
 
 -- 4. Datos de los jugadores que miden más que todos los jugadores del Caja Laboral.
-select * from jugador j where j.altura > (select max(j2.altura) from jugador j2 join equipo e2 on j2.equipo = e2.id_equipo where e2.nombre = 'Caja Laboral');
+select * from jugador j join equipo e on j.equipo=e.id_equipo where j.altura > 
+(select j.altura from jugador j join equipo e on j.equipo=e.id_equipo where e.nombre = 'caja laboral' order by j.altura desc limit 1);
 
 -- 5. Datos de los jugadores mejor pagado y peor pagado de la liga.
 select * from jugador where salario in ((select max(salario) from jugador),(select min(salario) from jugador where salario is not null));
