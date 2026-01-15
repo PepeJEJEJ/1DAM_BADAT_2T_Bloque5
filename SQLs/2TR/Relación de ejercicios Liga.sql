@@ -7,7 +7,7 @@ select * from jugador where altura = (select max(altura) from jugador);
 select j.* from jugador j join equipo e on j.equipo = e.id_equipo where e.nombre = 'Caja Laboral';
 
 -- 3. Suma de las alturas de los jugadores que sean del CAI Zaragoza o del Real Madrid.
-select sum(j.altura) from jugador j join equipo e on j.equipo = e.id_equipo where e.nombre in ('CAI Zaragoza','Real Madrid');
+select sum(altura) from jugador j join equipo e on j.equipo = e.id_equipo where e.nombre = "CAI Zaragoza" or e.nombre = "Real Madrid";
 
 -- 4. Datos de los jugadores que miden más que todos los jugadores del Caja Laboral.
 select * from jugador j where j.altura > (select max(j2.altura) from jugador j2 join equipo e2 on j2.equipo = e2.id_equipo where e2.nombre = 'Caja Laboral');
