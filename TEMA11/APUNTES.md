@@ -222,7 +222,7 @@ SELECT nombre FROM empleados
 UNION
 SELECT nombre FROM clientes;
 ```
-
+-- NO SALE:
 ### INTERSECT
 
 ```sql
@@ -230,7 +230,7 @@ SELECT id_producto FROM almacen1
 INTERSECT
 SELECT id_producto FROM almacen2;
 ```
-
+-- NO SALE:
 ### MINUS / EXCEPT
 
 ```sql
