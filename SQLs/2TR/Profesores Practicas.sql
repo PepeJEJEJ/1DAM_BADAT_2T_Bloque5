@@ -208,3 +208,16 @@ join prepara pr2 on pr1.asignatura = pr2.asignatura and pr1.dni < pr2.dni
 join profesores p1 on pr1.dni = p1.dni
 join profesores p2 on pr2.dni = p2.dni
 join asignaturas a on pr1.asignatura = a.codigo;
+
+
+-- Datos de asignaturas que SE imparten
+select * from asignatura where codigo IN (select asignatura from imparte);
+
+-- Datos de asignaturas que NO SE imparten
+select * from asignatura where codigo NOT IN (select asignatura from imparte);
+
+-- Datos de profes que imparten alguna asignatura
+select * from profesores where dni in(select dni from imparte);
+select * from profesores p join imparte i on(p.dni=i.dni);
+select * from profesores natural join imparte;
+
