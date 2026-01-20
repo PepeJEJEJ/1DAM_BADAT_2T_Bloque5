@@ -52,3 +52,10 @@ select e.nombre, avg(j.salario) from equipo e left join jugador j on j.equipo = 
 
 -- 17. Datos de los jugadores que cobran más que la media salarial de su equipo.
 select j.* from jugador j where j.salario > (select avg(j2.salario) from jugador j2 where j2.equipo = j.equipo);
+
+SELECT j.nombre,
+       e.nombre,
+       j.posicion
+FROM jugador j
+JOIN equipo e
+     ON e.id_equipo = j.equipo;
