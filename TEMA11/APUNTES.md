@@ -222,6 +222,7 @@ SELECT nombre FROM empleados
 UNION
 SELECT nombre FROM clientes;
 ```
+### ESTO NO SALE
 
 ### INTERSECT
 
@@ -240,6 +241,7 @@ SELECT id_producto FROM almacen2;
 ```
 
 ---
+### ESTO TAL VEZ SALE
 
 ## 12. Ordenación
 
