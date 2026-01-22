@@ -22,4 +22,12 @@ join persona pe on pr.id_profesor = pe.id
 join departamento d on pr.id_departamento = d.id;
 
 -- 6 Número de asignaturas que imparte cada profesor
-select *,count()
+select pe.nombre,pe.apellido1,pe.apellido2, count(a.id) from profesor pr
+join persona pe on pr.id_profesor = pe.id
+join asignatura a on pr.id_profesor = a.id_profesor
+group by pr.id_profesor, pe.nombre, pe.apellido1, pe.apellido2;
+
+-- 7 Saca todos los datos, tengan o no asignaturas asignadas
+select * from asignatura a join grado g on(g.id=a.id_grado);
+select * from asignatura a right join grado g on(g.id=a.id_grado);
+select * from grado;
