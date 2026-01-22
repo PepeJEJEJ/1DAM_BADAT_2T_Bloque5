@@ -1,7 +1,7 @@
 USE `universidad`;
 
 -- 1 Obtener la alumna con mayor edad.
-
+select min(fecha_nacimiento) from persona where sexo='M' and tipo='alumno';
 -- 2 Mostrar los datos de la asignatura cuyo id sea el mayor.
 
 -- 3 Mostrar el nombre de la asignatura y el nombre de su grado asociado.
