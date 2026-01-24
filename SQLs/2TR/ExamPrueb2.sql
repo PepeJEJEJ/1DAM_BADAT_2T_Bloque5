@@ -24,7 +24,7 @@ select g.* from grado g left join asignatura a on g.id=a.id_grado where a.id is 
 -- 7. Obtén el nombre y apellidos de cada alumno junto con el nombre de las asignaturas en las que está matriculado.
 select p.nombre, p.apellido1, p.apellido2, a.nombre from persona p, asignatura a join alumno_se_matricula_asignatura m on m.id_alumno=m.id_asignatura where p.tipo='alumno';
 -- 8. Muestra el nombre completo de los profesores y el número de asignaturas que imparten.
-
+select p.nombre, p.apellido1, p.apellido2,count(a.id_profesor) as n_asignaturas from persona p join asignatura a on p.id=a.id_profesor group by a.id_profesor;
 -- 9. Lista el nombre de la asignatura, el nombre del grado y el nombre completo del profesor responsable.
 
 -- 10. Obtén los nombres y apellidos de los alumnos que se matricularon en el curso escolar 2018/2019.
