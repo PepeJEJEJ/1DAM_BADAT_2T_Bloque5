@@ -11,9 +11,9 @@ select * from alumno_se_matricula_asignatura;
 -- 1. Obtén el nombre y apellidos de la alumna más joven registrada en la tabla persona.
 select id, nif, nombre, apellido1, apellido2, ciudad, direccion, telefono, min(fecha_nacimiento), sexo, tipo from persona where sexo='M' and tipo='alumno';
 -- 2. Muestra el nombre y apellidos de los profesores que no tienen asignaturas asignadas.
-
+select p.nombre, p.apellido1, p.apellido2, a.id_profesor from persona p left join asignatura a on p.id=a.id_profesor where a.id_profesor is null;
 -- 3. Lista el nombre de cada asignatura junto con el número de alumnos matriculados en ella.
-
+select * 
 -- 4. Muestra el nombre de las asignaturas y el nombre del grado al que pertenecen, pero solo aquellas que tengan más de 6 créditos.
 
 -- 5. Obtén el nombre completo del profesor y el nombre del departamento al que pertenece.
