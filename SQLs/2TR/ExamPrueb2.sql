@@ -13,7 +13,7 @@ select id, nif, nombre, apellido1, apellido2, ciudad, direccion, telefono, min(f
 -- 2. Muestra el nombre y apellidos de los profesores que no tienen asignaturas asignadas.
 select p.nombre, p.apellido1, p.apellido2, a.id_profesor from persona p left join asignatura a on p.id=a.id_profesor where a.id_profesor is null;
 -- 3. Lista el nombre de cada asignatura junto con el número de alumnos matriculados en ella.
-select * 
+select a.nombre,count(m.id_alumno) as alumnos_matriculados from asignatura a join alumno_se_matricula_asignatura m on m.id_asignatura=a.id group by a.nombre;
 -- 4. Muestra el nombre de las asignaturas y el nombre del grado al que pertenecen, pero solo aquellas que tengan más de 6 créditos.
 
 -- 5. Obtén el nombre completo del profesor y el nombre del departamento al que pertenece.
