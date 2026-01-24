@@ -40,11 +40,16 @@ join alumno_se_matricula_asignatura m1 on m1.id_alumno=p.id
 join alumno_se_matricula_asignatura m on m.id_curso_escolar=c.id
 where anyo_inicio='2018' and anyo_fin='2019'; -- akafklfskla
 -- 11. Muestra todas las asignaturas que no tienen profesor asignado.
-select * 
+select * from asignatura a where a.id_profesor is null;
 -- 12. Obtén el nombre de los departamentos y el número de profesores que pertenecen a cada uno.
-
+select d.nombre from departamento d
+join persona p on p.id=pr.id_profesor -- fallo
+join profesor pr on d.id=pr.id_profesor;
 -- 13. Lista los alumnos junto con el curso escolar en el que se matricularon y las asignaturas correspondientes.
-
+select * from persona p
+join alumno_se_matricula_asignatura m on m.id_alumno=p.id
+join curso_escolar c on m.id_alumno
+join asignatura a on m.id_curso_escolar=c.id;
 -- 14. Muestra el nombre de los grados y el número total de asignaturas que tienen asociadas.
 
 -- 15. Obtén el nombre y apellidos de los profesores que pertenecen al departamento de “Informática”.
