@@ -46,20 +46,33 @@ select d.nombre from departamento d
 join persona p on p.id=pr.id_profesor -- fallo
 join profesor pr on d.id=pr.id_profesor;
 -- 13. Lista los alumnos junto con el curso escolar en el que se matricularon y las asignaturas correspondientes.
-select * from persona p
+select p.*,c.id,a.nombre from persona p
 join alumno_se_matricula_asignatura m on m.id_alumno=p.id
 join curso_escolar c on m.id_alumno
 join asignatura a on m.id_curso_escolar=c.id;
 -- 14. Muestra el nombre de los grados y el número total de asignaturas que tienen asociadas.
-
+select *,count(a.nombre) as asig_asociadas from grado g
+join asignatura a on a.id_grado=g.id group by g.nombre;
 -- 15. Obtén el nombre y apellidos de los profesores que pertenecen al departamento de “Informática”.
-
+select p.nombre, p.apellido1, p.apellido2,d.nombre from persona p
+join profesor pr on pr.id_profesor=p.id
+join departamento d where d.id=1;
 -- 16. Muestra el nombre de los alumnos y el número de asignaturas en las que están matriculados.
-
+select distinct p.nombre, count(a.id) as matriculados from persona p
+join alumno_se_matricula_asignatura m on p.id=m.id_alumno
+join asignatura a on a.id=m.id_asignatura group by p.nombre;
 -- 17. Obtén el nombre de las asignaturas optativas y el grado al que pertenecen.
-
+select a.nombre as asignatura, g.nombre as grado from asignatura a 
+join grado g on g.id=a.id_grado where a.tipo='optativa';
 -- 18. Lista los profesores junto con el nombre de las asignaturas que imparten y el curso en el que se dan.
-
+select p.nombre,a.nombre,a.curso from persona p 
+join profesor pr on pr.id_profesor=p.id
+join asignatura a on p.id=a.id_profesor;
 -- 19. Muestra los alumnos matriculados en asignaturas del segundo cuatrimestre.
-
+select p.*,a.cuatrimestre from persona p 
+join asignatura a on a.id_grado=p.id where a.cuatrimestre=2;
 -- 20. Obtén el nombre de los grados y el número de alumnos matriculados en sus asignaturas.
+select g.nombre, count(a.nombre) as n_matriculaos from persona p
+join alumno_se_matricula_asignatura m on m.id_alumno=p.id
+join asignatura a on m.id_asignatura=a.id
+join grado g on a.id=g.id group by a.nombre;
