@@ -8,33 +8,39 @@ select * from grado ;
 select * from curso_escolar;
 select * from alumno_se_matricula_asignatura;
 
--- 1. Obtén el nombre y apellidos de la alumna más joven registrada en la tabla persona.
-select id, nif, nombre, apellido1, apellido2, ciudad, direccion, telefono, min(fecha_nacimiento), sexo, tipo from persona where sexo='M' and tipo='alumno';
+-- 1. Obtén el nombre y apellidos de la alumna más joven registrada en la tabla persona. (REPETIR)
+
 -- 2. Muestra el nombre y apellidos de los profesores que no tienen asignaturas asignadas.
 select p.nombre, p.apellido1, p.apellido2, a.id_profesor from persona p left join asignatura a on p.id=a.id_profesor where a.id_profesor is null;
 -- 3. Lista el nombre de cada asignatura junto con el número de alumnos matriculados en ella.
 select a.nombre,count(m.id_alumno) as alumnos_matriculados from asignatura a join alumno_se_matricula_asignatura m on m.id_asignatura=a.id group by a.nombre;
 -- 4. Muestra el nombre de las asignaturas y el nombre del grado al que pertenecen, pero solo aquellas que tengan más de 6 créditos.
-select a.nombre, a.id_grado from asignatura a join grado g on g.id=a.id_grado where a.creditos>6;
+select a.nombre, g.nombre from asignatura a join grado g on g.id=a.id_grado where a.creditos>6;
 -- 5. Obtén el nombre completo del profesor y el nombre del departamento al que pertenece.
-select p.nombre, p.apellido1, p.apellido2, d.nombre from persona p, profesor pr
-right join departamento d on pr.id_profesor=d.id; -- ESCRIBIR BIEN RIGHT (EN TERMINOS DE ORTOGRAFIA)
--- 6. Muestra los grados que no tienen ninguna asignatura asociada.
+select p.nombre, p.apellido1, p.apellido2, d.nombre from persona p
+join profesor pr on p.id = pr.id_profesor
+join departamento d on pr.id_departamento=d.id;
+-- 6. Muestra los grados que noid_profesor tienen ninguna asignatura asociada.
 select g.* from grado g left join asignatura a on g.id=a.id_grado where a.id is null;
 -- 7. Obtén el nombre y apellidos de cada alumno junto con el nombre de las asignaturas en las que está matriculado.
-select p.nombre, p.apellido1, p.apellido2, a.nombre from persona p, asignatura a join alumno_se_matricula_asignatura m on m.id_alumno=m.id_asignatura where p.tipo='alumno';
+select p.nombre, p.apellido1, p.apellido2, a.nombre from persona p, asignatura a
+join alumno_se_matricula_asignatura m on a.id=m.id_asignatura
+join asignatura a1 on a1.id_alumno = p.id
+where p.tipo='alumno'; -- akafklfskla
 -- 8. Muestra el nombre completo de los profesores y el número de asignaturas que imparten.
 select p.nombre, p.apellido1, p.apellido2,count(a.id_profesor) as n_asignaturas from persona p join asignatura a on p.id=a.id_profesor group by a.id_profesor;
 -- 9. Lista el nombre de la asignatura, el nombre del grado y el nombre completo del profesor responsable.
 select a.nombre as asignatura, g.nombre as grado, concat(p.nombre,'-',p.apellido1,'-',p.apellido2) as responsable from persona p 
-right join grado g on p.id=g.id
-right join asignatura a on p.id=a.id_grado;
+join profesor pr on pr.id_profesor=p.id
+join asignatura a on a.id=pr.id_profesor
+join grado g on g.id=a.id_grado;
 -- 10. Obtén los nombres y apellidos de los alumnos que se matricularon en el curso escolar 2018/2019.
 select p.nombre, p.apellido1, p.apellido2,c.* from persona p,curso_escolar c 
+join alumno_se_matricula_asignatura m1 on m1.id_alumno=p.id
 join alumno_se_matricula_asignatura m on m.id_curso_escolar=c.id
-where anyo_inicio='2018' and anyo_fin='2019';
+where anyo_inicio='2018' and anyo_fin='2019'; -- akafklfskla
 -- 11. Muestra todas las asignaturas que no tienen profesor asignado.
-
+select * 
 -- 12. Obtén el nombre de los departamentos y el número de profesores que pertenecen a cada uno.
 
 -- 13. Lista los alumnos junto con el curso escolar en el que se matricularon y las asignaturas correspondientes.
