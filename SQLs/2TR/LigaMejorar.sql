@@ -2,7 +2,7 @@ USE `liga`;
 select * from jugador;
 select * from equipo;
 select * from partido;
--- Estos ejercicios (salvo el 3) estan mal y he de estudiarlos
+-- Estos ejercicios (salvo el 3) estan mal y he de estudiarlos:
 -- 1. Muestra el nombre y apellido de los jugadores cuyo salario sea superior al salario medio de toda la liga.
 SELECT j.nombre, j.apellido
 FROM jugador j
