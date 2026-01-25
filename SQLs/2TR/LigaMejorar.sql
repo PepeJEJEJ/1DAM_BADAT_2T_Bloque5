@@ -40,15 +40,14 @@ SELECT p.*
 FROM partido p
 JOIN equipo e1 ON p.local = e1.id_equipo
 JOIN equipo e2 ON p.visitante = e2.id_equipo
-WHERE e1.ciudad = e2.ciudad;
+WHERE e1.ciudad = e2.ciudad; -- Aqui, tras seleccionar locales y visitantes, los elegimos si son de la misma ciudad (en equipos)
 -- 9. Obtén el nombre de los jugadores cuyo apellido empiece por la letra 'S' y cuyo salario sea mayor de 60.000.
 SELECT nombre, apellido
 FROM jugador
-WHERE apellido LIKE 'S%' 
+WHERE apellido LIKE 'S%' -- ESTO ES PARA BUSCAR ALGO SI EMPIEZA POR UNA LETRA (Aqui, es la "S")
   AND salario > 60000;
 -- 10. Muestra el nombre del equipo y la suma total de los salarios de todos sus jugadores.
-SELECT e.nombre AS equipo,
-       SUM(j.salario) AS total_salarios
+SELECT e.nombre AS equipo, SUM(j.salario) AS total_salarios -- AQUI SUMAMOS TODOS LOS SALARIOS DE LOS JUGADORES
 FROM equipo e
 LEFT JOIN jugador j ON e.id_equipo = j.equipo
 GROUP BY e.id_equipo, e.nombre;
