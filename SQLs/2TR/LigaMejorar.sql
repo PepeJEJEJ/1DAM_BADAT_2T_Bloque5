@@ -6,20 +6,20 @@ select * from partido;
 -- 1. Muestra el nombre y apellido de los jugadores cuyo salario sea superior al salario medio de toda la liga.
 SELECT j.nombre, j.apellido
 FROM jugador j
-WHERE j.salario > (SELECT AVG(salario) FROM jugador);
+WHERE j.salario > (SELECT AVG(salario) FROM jugador); -- SUBCONSULTA
 -- 2. Obtén los datos de los equipos que hayan jugado al menos un partido como locales y hayan ganado ese partido
 --    (usa el campo resultado para determinar el ganador).
 SELECT DISTINCT e.nombre
 FROM partido p
 JOIN equipo e ON p.local = e.id_equipo
-WHERE CAST(SUBSTRING_INDEX(p.resultado,'-',1) AS UNSIGNED) >
-      CAST(SUBSTRING_INDEX(p.resultado,'-',-1) AS UNSIGNED);
+WHERE LEFT(p.resultado, LOCATE('-', p.resultado) - 1) >
+      RIGHT(p.resultado, LENGTH(p.resultado) - LOCATE('-', p.resultado)); -- LENGTH es PA LA LONGITUD DEL TEXTO 
 -- 3. Lista el nombre del jugador, su equipo y su salario, ordenados de mayor a menor salario.
-select j.*,e.nombre from jugador j join equipo e on j.equipo=e.id_equipo order by salario desc;
+select j.*,e.nombre from jugador j join equipo e on j.equipo=e.id_equipo order by salario desc; -- Ta Bien
 -- 4. Muestra los datos de los jugadores que fueron dados de alta en el año 2011.
 SELECT * 
 FROM jugador j
-WHERE j.fecha_alta BETWEEN '2011-01-01' AND '2011-12-31';
+WHERE j.fecha_alta BETWEEN '2011-01-01' AND '2011-12-31'; -- 
 -- 5. Obtén el nombre de los equipos que hayan jugado partidos tanto como locales como visitantes.
 SELECT e.nombre
 FROM equipo e
