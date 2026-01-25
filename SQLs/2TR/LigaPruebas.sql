@@ -11,7 +11,7 @@ select e.*,p.resultado from partido p join equipo e on p.local = e.id_equipo whe
 -- 3. Lista el nombre del jugador, su equipo y su salario, ordenados de mayor a menor salario.
 select j.*,e.nombre from jugador j join equipo e on j.equipo=e.id_equipo order by salario desc;
 -- 4. Muestra los datos de los jugadores que fueron dados de alta en el año 2011.
-
+select * from jugador j where j.fecha_alta between date('2011-01-01') and ('2011-31-12');
 -- 5. Obtén el nombre de los equipos que hayan jugado partidos tanto como locales como visitantes.
 
 -- 6. Muestra el nombre del equipo y el número total de partidos que ha disputado (sumando local + visitante).
