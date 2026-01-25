@@ -40,23 +40,24 @@ join alumno_se_matricula_asignatura m1 on m1.id_alumno=p.id
 join alumno_se_matricula_asignatura m on m.id_curso_escolar=c.id
 where anyo_inicio='2018' and anyo_fin='2019'; -- akafklfskla
 -- 11. Muestra todas las asignaturas que no tienen profesor asignado.
-select * from asignatura a where a.id_profesor is null;
+select * from asignatura where id_profesor is null;
 -- 12. Obtén el nombre de los departamentos y el número de profesores que pertenecen a cada uno.
-select d.nombre from departamento d
-join persona p on p.id=pr.id_profesor -- fallo
-join profesor pr on d.id=pr.id_profesor;
+select d.nombre, count(pr.id_profesor) as num_profesores from departamento d
+left join profesor pr on d.id = pr.id_departamento
+group by d.id;
 -- 13. Lista los alumnos junto con el curso escolar en el que se matricularon y las asignaturas correspondientes.
-select p.*,c.id,a.nombre from persona p
+select p.apellido1,p.apellido2,p.nombre,concat(c.anyo_inicio,'-',c.anyo_fin) as curso,a.nombre from persona p
 join alumno_se_matricula_asignatura m on m.id_alumno=p.id
-join curso_escolar c on m.id_alumno
-join asignatura a on m.id_curso_escolar=c.id;
+join curso_escolar c on m.id_curso_escolar=c.id
+join asignatura a on m.id_asignatura=a.id;
 -- 14. Muestra el nombre de los grados y el número total de asignaturas que tienen asociadas.
-select *,count(a.nombre) as asig_asociadas from grado g
-join asignatura a on a.id_grado=g.id group by g.nombre;
+select g.nombre,count(a.nombre) as asig_asociadas from grado g
+left join asignatura a on a.id_grado=g.id group by g.nombre;
 -- 15. Obtén el nombre y apellidos de los profesores que pertenecen al departamento de “Informática”.
 select p.nombre, p.apellido1, p.apellido2,d.nombre from persona p
 join profesor pr on pr.id_profesor=p.id
-join departamento d where d.id=1;
+join departamento d on d.id=pr.id_departamento
+where d.nombre='Informática';
 -- 16. Muestra el nombre de los alumnos y el número de asignaturas en las que están matriculados.
 select distinct p.nombre, count(a.id) as matriculados from persona p
 join alumno_se_matricula_asignatura m on p.id=m.id_alumno
@@ -69,10 +70,9 @@ select p.nombre,a.nombre,a.curso from persona p
 join profesor pr on pr.id_profesor=p.id
 join asignatura a on p.id=a.id_profesor;
 -- 19. Muestra los alumnos matriculados en asignaturas del segundo cuatrimestre.
-select p.*,a.cuatrimestre from persona p 
+select p.* from persona p 
 join asignatura a on a.id_grado=p.id where a.cuatrimestre=2;
 -- 20. Obtén el nombre de los grados y el número de alumnos matriculados en sus asignaturas.
-select g.nombre, count(a.nombre) as n_matriculaos from persona p
-join alumno_se_matricula_asignatura m on m.id_alumno=p.id
-join asignatura a on m.id_asignatura=a.id
-join grado g on a.id=g.id group by a.nombre;
+SELECT g.nombre AS grado,COUNT(m.id_alumno) AS alumnos_matriculados FROM grado g
+left JOIN asignatura a ON a.id_grado = g.id
+left JOIN alumno_se_matricula_asignatura m ON m.id_asignatura = a.id GROUP BY g.id, g.nombre;
