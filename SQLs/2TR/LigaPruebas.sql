@@ -19,7 +19,7 @@ select e.id_equipo, e.nombre as p_Disputados, sum(p.local+p.visitante) from equi
 -- 7. Lista los jugadores que tienen la misma altura que el capitán de su propio equipo.
 select * from jugador j where j.id_capitan=j.id_jugador;
 -- 8. Muestra los datos de los partidos en los que el equipo local y el visitante pertenecen a la misma ciudad.
-
+select e.* from equipo e where e.ciudad=e.ciudad;
 -- 9. Obtén el nombre de los jugadores cuyo apellido empiece por la letra 'S' y cuyo salario sea mayor de 60.000.
 
 -- 10. Muestra el nombre del equipo y la suma total de los salarios de todos sus jugadores.

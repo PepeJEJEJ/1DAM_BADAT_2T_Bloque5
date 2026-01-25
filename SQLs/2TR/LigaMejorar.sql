@@ -36,7 +36,19 @@ FROM jugador j
 JOIN jugador cap ON j.id_capitan = cap.id_jugador
 WHERE j.altura = cap.altura;
 -- 8. Muestra los datos de los partidos en los que el equipo local y el visitante pertenecen a la misma ciudad.
-
+SELECT p.*
+FROM partido p
+JOIN equipo e1 ON p.local = e1.id_equipo
+JOIN equipo e2 ON p.visitante = e2.id_equipo
+WHERE e1.ciudad = e2.ciudad;
 -- 9. Obtén el nombre de los jugadores cuyo apellido empiece por la letra 'S' y cuyo salario sea mayor de 60.000.
-
+SELECT nombre, apellido
+FROM jugador
+WHERE apellido LIKE 'S%' 
+  AND salario > 60000;
 -- 10. Muestra el nombre del equipo y la suma total de los salarios de todos sus jugadores.
+SELECT e.nombre AS equipo,
+       SUM(j.salario) AS total_salarios
+FROM equipo e
+LEFT JOIN jugador j ON e.id_equipo = j.equipo
+GROUP BY e.id_equipo, e.nombre;
