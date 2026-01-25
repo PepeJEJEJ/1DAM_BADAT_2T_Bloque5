@@ -72,4 +72,5 @@ select * from jugador j where j.id_capitan=j.id_jugador;
 select e.* from equipo e where e.ciudad=e.ciudad;
 -- 9. Obtén el nombre de los jugadores cuyo apellido empiece por la letra 'S' y cuyo salario sea mayor de 60.000.
 
--- 10. Muestra el nombre del equipo y la suma total de los salarios de todos sus jugadores.
+-- 10. Datos de los equipos que hayan jugado partidos en los que el resultado fue empate.
+select e.* from partido p join equipo e on p.resultado=e.id_equipo; -- Tu versión intentaba unir resultado con id_equipo, lo cual no tiene sentido.

@@ -26,4 +26,4 @@ select *,count(p.visitante) from equipo e join partido p on p.visitante=e.id_equ
 -- 9. Datos de los jugadores cuyo equipo tenga más puntos que el CAI Zaragoza.
 select * from jugador j join equipo e on j.equipo=e.id_equipo and e.puntos>'CAI Zaragoza';
 -- 10. Datos de los equipos que hayan jugado partidos en los que el resultado fue empate.
-select e.* from partido p join equipo e on p.resultado=e.id_equipo; -- ¿?
+select e.* from partido p join equipo e on p.resultado=e.id_equipo; -- Tu versión intentaba unir resultado con id_equipo, lo cual no tiene sentido.
