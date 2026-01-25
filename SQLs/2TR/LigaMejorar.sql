@@ -19,7 +19,7 @@ select j.*,e.nombre from jugador j join equipo e on j.equipo=e.id_equipo order b
 -- 4. Muestra los datos de los jugadores que fueron dados de alta en el año 2011.
 SELECT * 
 FROM jugador j
-WHERE j.fecha_alta BETWEEN '2011-01-01' AND '2011-12-31'; -- 
+WHERE j.fecha_alta BETWEEN '2011-01-01' AND '2011-12-31'; -- BETWEEN ES COMPARAR VALORES DENTRO DE UN RANGO (A y B)
 -- 5. Obtén el nombre de los equipos que hayan jugado partidos tanto como locales como visitantes.
 SELECT e.nombre
 FROM equipo e
