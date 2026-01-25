@@ -26,7 +26,7 @@ FROM equipo e
 WHERE EXISTS (SELECT 1 FROM partido p WHERE p.local = e.id_equipo) -- EXISTS DEVUELVE UN BOOLEANO (V. O F.)
   AND EXISTS (SELECT 1 FROM partido p WHERE p.visitante = e.id_equipo);
 -- 6. Muestra el nombre del equipo y el número total de partidos que ha disputado (sumando local + visitante).
-SELECT e.nombre, COUNT(p.id_partido) AS partidos_disputados
+SELECT e.nombre, COUNT(p.id_partido) AS partidos_disputados -- Contamos los IDs de los partidos
 FROM equipo e
 JOIN partido p ON e.id_equipo IN (p.local, p.visitante)
 GROUP BY e.id_equipo, e.nombre;
@@ -34,7 +34,7 @@ GROUP BY e.id_equipo, e.nombre;
 SELECT j.nombre, j.apellido
 FROM jugador j
 JOIN jugador cap ON j.id_capitan = cap.id_jugador
-WHERE j.altura = cap.altura;
+WHERE j.altura = cap.altura; -- Si HAY QUE UNIR CAMPOS DE UNA MISMA TABLA, HAY QUE USAR LA MISMA TABLA PERO CON DISTINTO "MOTE"
 -- 8. Muestra los datos de los partidos en los que el equipo local y el visitante pertenecen a la misma ciudad.
 SELECT p.*
 FROM partido p
