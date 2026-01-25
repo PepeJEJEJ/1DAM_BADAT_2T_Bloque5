@@ -12,7 +12,7 @@ WHERE j.salario > (SELECT AVG(salario) FROM jugador); -- SUBCONSULTA
 SELECT DISTINCT e.nombre
 FROM partido p
 JOIN equipo e ON p.local = e.id_equipo
-WHERE LEFT(p.resultado, LOCATE('-', p.resultado) - 1) >
+WHERE LEFT(p.resultado, LOCATE('-', p.resultado) - 1) > -- BUSCA COSAS DENTRO DE UN TEXTO
       RIGHT(p.resultado, LENGTH(p.resultado) - LOCATE('-', p.resultado)); -- LENGTH es PA LA LONGITUD DEL TEXTO 
 -- 3. Lista el nombre del jugador, su equipo y su salario, ordenados de mayor a menor salario.
 select j.*,e.nombre from jugador j join equipo e on j.equipo=e.id_equipo order by salario desc; -- Ta Bien
