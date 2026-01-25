@@ -1,0 +1,25 @@
+USE `liga`;
+select * from jugador;
+select * from equipo;
+select * from partido;
+
+-- 1. Muestra el nombre y apellido de los jugadores cuyo salario sea superior al salario medio de toda la liga.
+select j.nombre, j.apellido, avg(j.salario) from jugador j;-- Este nunca lo logro
+-- 2. Obtén los datos de los equipos que hayan jugado al menos un partido como locales y hayan ganado ese partido
+--    (usa el campo resultado para determinar el ganador).
+select e.*,p.resultado from partido p join equipo e on p.local = e.id_equipo where resultado>100;
+-- 3. Lista el nombre del jugador, su equipo y su salario, ordenados de mayor a menor salario.
+
+-- 4. Muestra los datos de los jugadores que fueron dados de alta en el año 2011.
+
+-- 5. Obtén el nombre de los equipos que hayan jugado partidos tanto como locales como visitantes.
+
+-- 6. Muestra el nombre del equipo y el número total de partidos que ha disputado (sumando local + visitante).
+
+-- 7. Lista los jugadores que tienen la misma altura que el capitán de su propio equipo.
+
+-- 8. Muestra los datos de los partidos en los que el equipo local y el visitante pertenecen a la misma ciudad.
+
+-- 9. Obtén el nombre de los jugadores cuyo apellido empiece por la letra 'S' y cuyo salario sea mayor de 60.000.
+
+-- 10. Muestra el nombre del equipo y la suma total de los salarios de todos sus jugadores.
