@@ -17,9 +17,10 @@ select * from jugador where fecha_alta > '2011-01-01';
 -- 6. Datos de los equipos que tengan al menos un jugador con salario superior a 100000.
 select e.* from jugador j join equipo e on j.equipo=e.id_equipo and j.salario>100000;
 -- 7. Datos de los jugadores que tengan la misma altura que algún otro jugador de su mismo equipo.
-
+select j.nombre,j.apellido,j.altura,a.nombre,a.apellido,j.altura from jugador j join jugador a on j.id_capitan = a.id_jugador
+where j.altura = a.altura;
 -- 8. Datos de los equipos y el número de partidos que han jugado como visitantes.
-
+select *,count(p.visitante) from equipo e join partido p on p.visitante=e.id_equipo group by p.visitante;
 -- 9. Datos de los jugadores cuyo equipo tenga más puntos que el CAI Zaragoza.
-
+select * from jugador j join equipo e on j.equipo=e.id_equipo and e.puntos>'CAI Zaragoza';
 -- 10. Datos de los equipos que hayan jugado partidos en los que el resultado fue empate.
