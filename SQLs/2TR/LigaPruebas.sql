@@ -15,9 +15,9 @@ select * from jugador j where j.fecha_alta between date('2010-01-01') and ('2010
 -- 5. Obtén el nombre de los equipos que hayan jugado partidos tanto como locales como visitantes.
 select e.nombre,p.* from equipo e left join partido p on p.visitante = e.id_equipo and p.local = e.id_equipo;
 -- 6. Muestra el nombre del equipo y el número total de partidos que ha disputado (sumando local + visitante).
-select e.* from equipo e join partido p on p.local = e.id_equipo 
+select e.id_equipo, e.nombre as p_Disputados, sum(p.local+p.visitante) from equipo e, partido p group by id_equipo;
 -- 7. Lista los jugadores que tienen la misma altura que el capitán de su propio equipo.
-
+select * from jugador j where j.id_capitan=j.id_jugador and j.altura=;
 -- 8. Muestra los datos de los partidos en los que el equipo local y el visitante pertenecen a la misma ciudad.
 
 -- 9. Obtén el nombre de los jugadores cuyo apellido empiece por la letra 'S' y cuyo salario sea mayor de 60.000.
