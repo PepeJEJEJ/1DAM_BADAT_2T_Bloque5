@@ -7,9 +7,9 @@ select * from partido;
 select j.nombre, j.apellido, avg(j.salario) from jugador j;-- Este nunca lo logro
 -- 2. Obtén los datos de los equipos que hayan jugado al menos un partido como locales y hayan ganado ese partido
 --    (usa el campo resultado para determinar el ganador).
-select e.*,p.resultado from partido p join equipo e on p.local = e.id_equipo where resultado>100;
+select e.*,p.resultado from partido p join equipo e on p.local = e.id_equipo where resultado>11-11;-- la parte del resultado no se como hacerlo
 -- 3. Lista el nombre del jugador, su equipo y su salario, ordenados de mayor a menor salario.
-
+select j.*,e.nombre from jugador j join equipo e on j.equipo=e.id_equipo order by salario desc;
 -- 4. Muestra los datos de los jugadores que fueron dados de alta en el año 2011.
 
 -- 5. Obtén el nombre de los equipos que hayan jugado partidos tanto como locales como visitantes.
