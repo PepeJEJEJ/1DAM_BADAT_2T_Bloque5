@@ -23,7 +23,7 @@ WHERE j.fecha_alta BETWEEN '2011-01-01' AND '2011-12-31'; -- BETWEEN ES COMPARAR
 -- 5. Obtén el nombre de los equipos que hayan jugado partidos tanto como locales como visitantes.
 SELECT e.nombre
 FROM equipo e
-WHERE EXISTS (SELECT 1 FROM partido p WHERE p.local = e.id_equipo)
+WHERE EXISTS (SELECT 1 FROM partido p WHERE p.local = e.id_equipo) -- EXISTS DEVUELVE UN BOOLEANO (V. O F.)
   AND EXISTS (SELECT 1 FROM partido p WHERE p.visitante = e.id_equipo);
 -- 6. Muestra el nombre del equipo y el número total de partidos que ha disputado (sumando local + visitante).
 SELECT e.nombre, COUNT(p.id_partido) AS partidos_disputados
