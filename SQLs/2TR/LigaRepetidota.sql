@@ -16,7 +16,11 @@ union select p.local from partido p where p.visitante = (select id_equipo from e
 -- 5. Datos de los jugadores que fueron dados de alta después del 1 de enero de 2011.
 select * from jugador j where j.fecha_alta>'2011-01-01 00:00:00';
 -- 6. Datos de los equipos que tengan al menos un jugador con salario superior a 100000.
+select * from equipo e join jugador j on j.equipo=e.id_equipo where j.salario>100000 group by j.salario;
 -- 7. Datos de los jugadores que tengan la misma altura que algún otro jugador de su mismo equipo.
+select j.* from jugador j join jugador c on j.id_jugador=c.id_jugador where j.altura=c.altura group by j.equipo;
 -- 8. Datos de los equipos y el número de partidos que han jugado como visitantes.
+select e.*,count(p.visitante) as n_partidos_v from equipo e join partido p on e.id_equipo=p.visitante group by(p.visitante);
 -- 9. Datos de los jugadores cuyo equipo tenga más puntos que el CAI Zaragoza.
+select j.* from jugador j join equipo e on j.equipo=e.id_equipo where e.puntos>'CAI Zaragoza';
 -- 10. Datos de los equipos que hayan jugado partidos en los que el resultado fue empate.
