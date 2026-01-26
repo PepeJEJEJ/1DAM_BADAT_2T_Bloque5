@@ -24,3 +24,5 @@ select e.*,count(p.visitante) as n_partidos_v from equipo e join partido p on e.
 -- 9. Datos de los jugadores cuyo equipo tenga más puntos que el CAI Zaragoza.
 select j.* from jugador j join equipo e on j.equipo=e.id_equipo where e.puntos>'CAI Zaragoza';
 -- 10. Datos de los equipos que hayan jugado partidos en los que el resultado fue empate.
+select distinct e.* from partido p join equipo e on e.id_equipo in (p.local, p.visitante) 
+where substring_index(p.resultado, '-', 1) = substring_index(p.resultado, '-', -1); 
