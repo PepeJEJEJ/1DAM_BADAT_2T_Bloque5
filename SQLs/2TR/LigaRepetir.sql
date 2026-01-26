@@ -13,7 +13,7 @@ select * from jugador j join equipo e on j.equipo=e.id_equipo and e.nombre='Real
 -- 4. Datos de los equipos que hayan jugado partidos contra el Regal Barcelona, ya sea como local o visitante.
 select distinct e.* from equipo e
 where e.id_equipo in (select p.visitante from partido p where p.local = (select id_equipo from equipo where nombre = 'regal barcelona')
-union select p.local from partido p where p.visitante = (select id_equipo from equipo where nombre = 'regal barcelona'));
+union select p.local from partido p where p.visitante = (select id_equipo from equipo where nombre = 'regal barcelona')); -- subconsultas en subconsultas
 -- 5. Datos de los jugadores que fueron dados de alta después del 1 de enero de 2011.
 select * from jugador where fecha_alta > '2011-01-01';
 -- 6. Datos de los equipos que tengan al menos un jugador con salario superior a 100000.
