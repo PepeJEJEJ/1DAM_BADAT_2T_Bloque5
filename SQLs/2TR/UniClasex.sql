@@ -89,3 +89,19 @@ where id_grado = (
     from asignatura
     where nombre = 'bases de datos'
 );
+
+-- nombre de las asignaturas que no son las que menos créditos tienen
+select nombre
+from asignatura
+where creditos > (
+    select min(creditos)
+    from asignatura
+);
+
+-- nombre de las asignaturas que no son las que más créditos tienen
+select nombre
+from asignatura
+where creditos < (
+    select max(creditos)
+    from asignatura
+);
