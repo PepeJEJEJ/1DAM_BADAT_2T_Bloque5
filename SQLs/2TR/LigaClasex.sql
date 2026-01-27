@@ -137,3 +137,4 @@ where j.salario > (
     from jugador j2
     where j2.equipo = j.equipo
 );
+ -- un IN saca TODO LO DE UNA SUBCONSULTA
