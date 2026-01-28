@@ -1,7 +1,7 @@
 USE `universidad`;
 
 -- 1 Obtener la alumna con mayor edad.
-select * from persona where fecha_nacimiento = (select min(fecha_nacimiento) where sexo='M' and tipo='alumno');
+select id, nif, nombre, apellido1, apellido2, ciudad, direccion, telefono, min(fecha_nacimiento) as f_nac, sexo, tipo from persona where sexo='M' and tipo='alumno';
 
 -- 2 Mostrar los datos de la asignatura cuyo id sea el mayor.
 select * from asignatura where id = (select max(id) from asignatura);
