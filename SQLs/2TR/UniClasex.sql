@@ -1,11 +1,7 @@
 USE universidad;
 
 -- 1. obtener la alumna con mayor edad
-select *
-from persona
-where tipo = 'alumno'
-order by fecha_nacimiento
-limit 1;
+select * from persona where tipo = 'alumno' order by fecha_nacimiento limit 1;
 
 -- 2. datos de la asignatura cuyo id sea el mayor
 select *
