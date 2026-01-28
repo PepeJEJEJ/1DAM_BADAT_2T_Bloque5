@@ -44,8 +44,7 @@ from asignatura a
 left join profesor pr on a.id_profesor = pr.id_profesor;
 
 -- 9. datos de los profesores que imparten alguna asignatura
-select distinct pe.*
-from profesor pr
+select distinct pe.* from profesor pr
 inner join persona pe on pr.id_profesor = pe.id
 inner join asignatura a on a.id_profesor = pr.id_profesor;
 
