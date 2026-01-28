@@ -80,7 +80,7 @@ where id_grado = (
 );
 
 -- nombre de las asignaturas que no son las que menos créditos tienen
-select nombre
+select nombre, creditos
 from asignatura
 where creditos > (
     select min(creditos)
