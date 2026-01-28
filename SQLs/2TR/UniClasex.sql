@@ -66,8 +66,7 @@ from asignatura
 where creditos = (select min(creditos) from asignatura);
 
 -- 13. suma de créditos por cada grado
-select g.id, g.nombre, sum(a.creditos) as creditos_totales
-from grado g
+select g.id, g.nombre, sum(a.creditos) as creditos_totales from grado g
 left join asignatura a on a.id_grado = g.id
 group by g.id, g.nombre;
 
