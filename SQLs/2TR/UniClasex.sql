@@ -4,14 +4,10 @@ USE universidad;
 select * from persona where tipo = 'alumno' order by fecha_nacimiento limit 1;
 
 -- 2. datos de la asignatura cuyo id sea el mayor
-select *
-from asignatura
-where id = (select max(id) from asignatura);
+select * from asignatura where id = (select max(id) from asignatura);
 
 -- 3. nombre de la asignatura y nombre de su grado asociado
-select a.nombre as asignatura, g.nombre as grado
-from asignatura a
-inner join grado g on a.id_grado = g.id;
+select a.nombre as asignatura, g.nombre as grado from asignatura a inner join grado g on a.id_grado = g.id;
 
 -- 4. nombre de todas las asignaturas, su grado, y nombre y apellidos del profesor
 select a.nombre as asignatura,
