@@ -21,8 +21,7 @@ left join profesor pr on a.id_profesor = pr.id_profesor
 left join persona p on pr.id_profesor = p.id;
 
 -- 5. nombre y apellidos de los profesores con su departamento
-select pe.nombre, pe.apellido1, pe.apellido2, d.nombre as departamento
-from profesor pr
+select pe.nombre, pe.apellido1, pe.apellido2, d.nombre as departamento from profesor pr
 inner join persona pe on pr.id_profesor = pe.id
 inner join departamento d on pr.id_departamento = d.id;
 
