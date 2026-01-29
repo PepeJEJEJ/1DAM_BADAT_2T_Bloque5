@@ -35,7 +35,12 @@ right join curso_escolar c on m.id_curso_escolar=c.id group by c.id;
 -- Jose A.
 
 -- 5
-select c.id, c.anyo_inicio, c.anyo_fin,count(m.id_alumno) as N_Matriculas from persona p
+select a.nombre, p.nombre, p.apellido1, p.apellido2 from persona p
 join alumno_se_matricula_asignatura m on p.id=m.id_alumno
-join curso_escolar c on m.id_curso_escolar=c.id group by c.id;
+join asignatura a on m.id_asignatura=a.id group by a.id;
 
+-- Jose A.
+
+-- 6
+select g.nombre, sum(a.creditos) from asignatura a
+join grado g on a.id_grado=g.id group by a.creditos;
