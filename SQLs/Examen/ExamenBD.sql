@@ -41,6 +41,6 @@ join asignatura a on m.id_asignatura=a.id group by a.id;
 
 -- Jose A.
 
--- 6
+-- 7
 select g.nombre, sum(a.creditos) from asignatura a
-join grado g on a.id_grado=g.id group by a.creditos;
+right join grado g on a.id_grado=g.id group by a.creditos;
