@@ -1,21 +1,13 @@
 USE universidad;
 
 -- 1. obtener la alumna con mayor edad
-select *
-from persona
-where tipo = 'alumno'
-order by fecha_nacimiento
-limit 1;
+select * from persona where tipo = 'alumno' order by fecha_nacimiento limit 1;
 
 -- 2. datos de la asignatura cuyo id sea el mayor
-select *
-from asignatura
-where id = (select max(id) from asignatura);
+select * from asignatura where id = (select max(id) from asignatura);
 
 -- 3. nombre de la asignatura y nombre de su grado asociado
-select a.nombre as asignatura, g.nombre as grado
-from asignatura a
-inner join grado g on a.id_grado = g.id;
+select a.nombre as asignatura, g.nombre as grado from asignatura a inner join grado g on a.id_grado = g.id;
 
 -- 4. nombre de todas las asignaturas, su grado, y nombre y apellidos del profesor
 select a.nombre as asignatura,
@@ -29,8 +21,7 @@ left join profesor pr on a.id_profesor = pr.id_profesor
 left join persona p on pr.id_profesor = p.id;
 
 -- 5. nombre y apellidos de los profesores con su departamento
-select pe.nombre, pe.apellido1, pe.apellido2, d.nombre as departamento
-from profesor pr
+select pe.nombre, pe.apellido1, pe.apellido2, d.nombre as departamento from profesor pr
 inner join persona pe on pr.id_profesor = pe.id
 inner join departamento d on pr.id_departamento = d.id;
 
@@ -53,8 +44,7 @@ from asignatura a
 left join profesor pr on a.id_profesor = pr.id_profesor;
 
 -- 9. datos de los profesores que imparten alguna asignatura
-select distinct pe.*
-from profesor pr
+select distinct pe.* from profesor pr
 inner join persona pe on pr.id_profesor = pe.id
 inner join asignatura a on a.id_profesor = pr.id_profesor;
 
@@ -76,8 +66,7 @@ from asignatura
 where creditos = (select min(creditos) from asignatura);
 
 -- 13. suma de créditos por cada grado
-select g.id, g.nombre, sum(a.creditos) as creditos_totales
-from grado g
+select g.id, g.nombre, sum(a.creditos) as creditos_totales from grado g
 left join asignatura a on a.id_grado = g.id
 group by g.id, g.nombre;
 
@@ -91,7 +80,7 @@ where id_grado = (
 );
 
 -- nombre de las asignaturas que no son las que menos créditos tienen
-select nombre
+select nombre, creditos
 from asignatura
 where creditos > (
     select min(creditos)
