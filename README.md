@@ -2,8 +2,8 @@
 
 ## 📘 Contenidos del Bloque 5 - Lenguaje de manipulación de datos (DML)
 
-- **Tema 09:** La sentencia SELECT
-- **Tema 10:** Operadores y funciones
+- [**Tema 09:** La sentencia SELECT](TEMA9/APUNTES.md)
+- [**Tema 10:** Operadores y funciones](TEMA10/APUNTES.md)
 - [**Tema 11:** Consultas multitabla y subconsultas](TEMA11/APUNTES.md) 
 
 
