@@ -241,7 +241,7 @@ SELECT id_producto FROM almacen2;
 ```
 
 ---
-### ESTO TAL VEZ SALE
+### ESTO SI SALE
 
 ## 12. Ordenación
 
